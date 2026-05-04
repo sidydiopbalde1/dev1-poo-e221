@@ -1,20 +1,27 @@
 package com.ecommerce.catalogue.domain.entity;
 
 public class Item {
-    private String itemId;
+    private int itemId;
+    private String name;
     private String productId;
     private int quantity;
     private double price;
 
-    public Item(String itemId, String productId, int quantity, double price) {
+
+    public Item(int itemId, String name, String productId, int quantity, double price) {
         this.itemId = itemId;
+        this.name = name;
         this.productId = productId;
         this.quantity = quantity;
         this.price = price;
     }
 
-    public String getItemId() {
+    public int getItemId() {
         return itemId;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getProductId() {

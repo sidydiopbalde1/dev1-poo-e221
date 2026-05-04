@@ -10,6 +10,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.ecommerce.catalogue.domain.entity.Item;
+import com.ecommerce.catalogue.domain.entity.Order;
 import com.ecommerce.catalogue.domain.entity.Product1;
 import com.ecommerce.catalogue.domain.entity.Student;
 import com.ecommerce.catalogue.domain.entity.Transaction;
@@ -67,9 +69,9 @@ public class Exo {
             //Ex 7 : Extraction de données
 
             List<User> users = List.of(
-                new User("SIdy", "sidydiop@gmail.com", "password123", true, "USER"),
-                new User("Aminata", "aminatadiop@gmail.com", "password456", false, "USER"),
-                new User("Moussa", "moussadiop@gmail.com", "password789", true, "USER")
+                new User("SIdy", "sidydiop@gmail.com", "password123", true, "USER", "123 Rue de la Paix"),
+                new User("Aminata", "aminatadiop@gmail.com", "password456", false, "USER", "456 Avenue des Champs-Élysées"),
+                new User("Moussa", "moussadiop@gmail.com", "password789", true, "USER", "789 Boulevard Saint-Germain")
             );
 
             List<String>emails = users.stream().map(User::getLogin).toList();
@@ -130,7 +132,41 @@ public class Exo {
             System.out.println("Étudiants avec note < 10 : " + partitioned.get(false).stream().map(Student::getName).toList());
 
             //Ex 14 : Aplatissement (FlatMap)
-            
+                List<Item> items1 = List.of(new Item(1, "banane", "Item1", 1, 10.0), new Item(2, "pomme", "Item2", 1, 20.0));
+                List<Item> items2 = List.of(new Item(3, "orange", "Item3", 1, 30.0), new Item(4, "kiwi",  "Item4", 1, 40.0));
+                List<Order> orders = List.of(
+                    new Order("O1", "C1", 30.0, "COMPLETED", items1),
+                    new Order("O2", "C2", 70.0, "PENDING", items2)
+                );
+                List<Item> allItems = orders.stream().flatMap(o -> o.getItems().stream()).toList();
+                System.out.println("Tous les articles : " + allItems.stream().map(Item::getName).toList());
+                
+            //Ex 15 : Chaînage sécurisé (Optional)
+             User user = new User("Moussa", "moussadiop@gmail.com", "password789", true, "USER", "789 Boulevard Saint-Germain");
+            // User user = null; // Simulons un utilisateur nul
+            String street = Optional.ofNullable(user)
+                                    .map(User::getAddress)
+                                    .map(addr -> addr.split(" ")[0]) 
+                                    .orElse("Rue inconnue");
+            System.out.println("Rue de l'utilisateur : " + street);
+
+
+
+            System.out.println("\n---------------------------------------\n");
+
+            System.out.println("\nNIVEAU 4 : Expert (Résilience & Cas Réels)\n");   
+            //Ex 16 : Composition de Prédicats
+            Predicate<Transaction> isXof = t -> t.getAmount() > 0 && t.getDevise().equals("XOF");
+            Predicate<Transaction> isPremium = t -> {
+                // Simulons la vérification du type d'utilisateur
+                String userType = "PREMIUM"; // Cela pourrait venir d'une base de données ou d'un service
+                return userType.equals("PREMIUM");
+            };
+            Predicate<Transaction> complexValidator = isXof.or(isPremium);
+
+           
+              
+
         }
 
 }
