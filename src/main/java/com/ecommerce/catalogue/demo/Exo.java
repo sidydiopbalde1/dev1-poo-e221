@@ -69,9 +69,9 @@ public class Exo {
             //Ex 7 : Extraction de données
 
             List<User> users = List.of(
-                new User("SIdy", "sidydiop@gmail.com", "password123", true, "USER", "123 Rue de la Paix"),
-                new User("Aminata", "aminatadiop@gmail.com", "password456", false, "USER", "456 Avenue des Champs-Élysées"),
-                new User("Moussa", "moussadiop@gmail.com", "password789", true, "USER", "789 Boulevard Saint-Germain")
+                new User("SIdy", "sidydiop@gmail.com", "password123", true, "USER", "123 Rue de la Paix", "U1"),
+                new User("Aminata", "aminatadiop@gmail.com", "password456", false, "USER", "456 Avenue des Champs-Élysées", "U2"),
+                new User("Moussa", "moussadiop@gmail.com", "password789", true, "USER", "789 Boulevard Saint-Germain", "U3")
             );
 
             List<String>emails = users.stream().map(User::getLogin).toList();
@@ -142,7 +142,7 @@ public class Exo {
                 System.out.println("Tous les articles : " + allItems.stream().map(Item::getName).toList());
                 
             //Ex 15 : Chaînage sécurisé (Optional)
-             User user = new User("Moussa", "moussadiop@gmail.com", "password789", true, "USER", "789 Boulevard Saint-Germain");
+             User user = new User("Moussa", "moussadiop@gmail.com", "password789", true, "USER", "789 Boulevard Saint-Germain", "U1");
             // User user = null; // Simulons un utilisateur nul
             String street = Optional.ofNullable(user)
                                     .map(User::getAddress)
